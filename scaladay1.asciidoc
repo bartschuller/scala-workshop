@@ -1,0 +1,33 @@
+First day of Scala
+==================
+:icons:
+:corpname: Lunatech Labs
+:language: scala
+Bart Schuller <schuller@lunatech.com>
+v. 0.1, 2011-08-01
+
+== Today's menu
+
+[options="incremental"]
+* Short introduction to Scala
+* Setting up your environment
+* Excercises
+
+
+== A listing
+
+[source]
+for (a <- stuff;
+     b <- more) {  // <1>
+    dowith(a, b)   // <2>
+}
+
+[options="incremental"]
+<1> This says something about the arrow,
+which points to the _left_.
+<2> This is about dowith.
+
+== Last slide
+
+// a2x: --dblatex-opt "-i /Users/schuller/texmf/tex// -P latex.output.revhistory=0 -P doc.collab.show=1"
+// vim:tw=55:

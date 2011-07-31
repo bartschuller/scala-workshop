@@ -1,0 +1,6 @@
+An initial attempt at adding S5 support to Asciidoc.
+
+The s5.conf file contains the necessary tweaks to the xhtml11 backend.
+The s5 folder contains all the files and themes from the S5 1.3ß7
+distribution. The output is currently locked to the advanced_utf theme.
+This needs to be configurable.
