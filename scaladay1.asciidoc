@@ -4,15 +4,24 @@ First day of Scala
 :corpname: Lunatech Labs
 :language: scala
 Bart Schuller <schuller@lunatech.com>
-v. 0.1, 2011-08-01
+v. 0.1, 2011-07-31
 
 == Today's menu
 
-[options="incremental"]
-* Short introduction to Scala
+* Introduction to the Scala language
+* Scala tools and resources
 * Setting up your environment
 * Excercises
 
+Actually, we're going the agile route and iterate these
+subjects.
+
+== Scala the language
+
+* Multi
+== Installing Scala
+
+`brew install scala [--with-docs]`
 
 == A listing
 
