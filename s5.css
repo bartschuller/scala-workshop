@@ -1,5 +1,5 @@
 /* This is just an example */
-#logo {position: fixed; top: 25px; right: 50px; width: 198px; height: 59px; background: transparent url(scala-logo.png) no-repeat;}
+#logo {position: fixed; top: 25px; right: 50px; width: 198px; height: 59px; background: transparent url(images/scala-logo.png) no-repeat;}
 .imgcon {width: 100%; margin: 0 auto; padding: 0; text-align: center;}
 .listingblock .content {font-size: 90%;}
 .colist ol { list-style: none; }
@@ -7,3 +7,4 @@
 .marker { width: 1em; padding: 0.1em; position: absolute; left: 1em; }
 .marker img {width: 0.9em;}
 .incremental .marker img {opacity: 0.15;}
+.center { display: block; text-align: center; }

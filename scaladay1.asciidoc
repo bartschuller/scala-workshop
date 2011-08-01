@@ -18,25 +18,80 @@ subjects.
 
 == Scala the language
 
-* Multi
+* Multi-paradigmatic
+* supercali…
+
 == Installing Scala
 
 `brew install scala [--with-docs]`
 
-== A listing
+== Euler problem 9
 
-[source]
-for (a <- stuff;
-     b <- more) {  // <1>
-    dowith(a, b)   // <2>
-}
+A Pythagorean triplet is a set of three natural numbers, +
+a < b < c, for which,
+
+[center]_a^2^ + b^2^ = c^2^_
+
+For example, 3^2^ + 4^2^ = 9 + 16 = 25 = 5^2^.
+
+There exists exactly one Pythagorean triplet for which +
+a + b + c = 1000. Find the product _abc_.
+
+== Analysis
+
+All are Natural numbers, so > 0 +
+a < b < c +
+a^2^ + b^2^ = c^2^ +
+a + b + c = 1000
 
 [options="incremental"]
-<1> This says something about the arrow,
-which points to the _left_.
-<2> This is about dowith.
+* a, b and c are smaller than 1000
+* c = 1000 - a - b
+* let's just try all a and b below 1000
+
+== for
+
+[source]
+  def euler9 = {
+    val ans =
+      for (b <- 2 to 1000;  // <1>
+           a <- 1 to b;     // <2>
+           c = 1000 - a - b
+               if c*c == a*a + b*b)
+        yield a*b*c
+    ans.head
+  }
+
+[options="incremental"]
+<1> _b_ is a fresh variable, taking on the succesive
+values 2 to 1000 inclusive
+<2> This is a loop within a loop, _a_ loops from 1 to the
+current value of b, so we generate all possible combinations
+of a and b.
+
+== for
+
+[source]
+  def euler9 = {
+    val ans =
+      for (b <- 2 to 1000;
+           a <- 1 to b;
+           c = 1000 - a - b // <1>
+               if c*c == a*a + b*b) // <2>
+        yield a*b*c
+    ans.head
+  }
+
+[options="incremental"]
+<1> Assignment just gives a name to an expression, we still
+loop just over b, then a.
+<2> An `if` statement can appear anywhere to add a
+constraint to the combination of values. If not met, then inner loops and the
+body are skipped.
 
 == Last slide
 
+That's all, folks!
+
 // a2x: --dblatex-opt "-i /Users/schuller/texmf/tex// -P latex.output.revhistory=0 -P doc.collab.show=1"
-// vim:tw=55:
+// vim:tw=60:
