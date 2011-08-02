@@ -1,0 +1,6 @@
+package pubsub
+
+
+class NosyGuy {
+
+}
