@@ -19,11 +19,26 @@ subjects.
 == Scala the language
 
 * Multi-paradigmatic
-* supercali…
+* Yes, it's functional
+* But also a better OO language
+
+== Observer pattern
+
+Java has had `java.util.Observable` since 1.0, but
+it's never used
+
+* No generics (fixable)
+* It's a class (can't mix it in)
 
 == Installing Scala
 
 `brew install scala [--with-docs]`
+
+== For loops
+
+[source]
+for (i <- 1 to 10) { println(i) }
+
 
 == Euler problem 9
 
