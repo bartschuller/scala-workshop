@@ -1,0 +1,48 @@
+Asciidoc for presentations
+==========================
+:corpname: Lunatech Labs
+Bart Schuller <schuller@lunatech.com>
+v. 0.1, 2011-08-04
+
+== What
+
+This project contains the tools to create a presentation from
+http://www.methods.co.nz/asciidoc/[asciidoc] input, as well
+as a presentation, which you can ignore.
+
+The presentation uses a http://www.netzgesta.de/S5/[newer] version
+of http://meyerweb.com/eric/tools/s5/[S5].
+
+This work is a modified version of https://github.com/svenax/asciidoc-s5[asciidoc-s5].
+
+== Tools needed
+
+asciidoc::
+  * on a Mac: `brew install asciidoc`
+  * Probably available in your Linux distribution too
+docbook::
+  Only needed for handouts
+  * Mac: `brew install docbook`
+  * Linux: it's probably a dependency of asciidoc, otherwise, get both
+    the docbook dtds and the XSL toolchain
+dblatex::
+  Only needed for handouts. Needs a TeX installation, which eats a couple of
+  Gb of disk space.
+  * Mac: first install http://www.tug.org/mactex/[MacTeX], then install dblatex using
+    https://github.com/bartschuller/homebrew/blob/master/Library/Formula/dblatex.rb
+  * Linux: probably packaged
+
+== Running
+
+=== Creating the HTML presentation
+
+`asciidoc -f s5.conf mypresentation.asciidoc`
+
+Add `-v` if you encounter problems.
+
+=== Creating the handout PDF
+
+`a2x mypresentation.asciidoc`
+
+Add `-v` if you encounter problems.
+

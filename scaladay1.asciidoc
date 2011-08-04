@@ -16,6 +16,23 @@ v. 0.1, 2011-07-31
 Actually, we're going the agile route and iterate these
 subjects.
 
+****
+Notes like this one only appear in the handouts. They can be
+as long as you like and can presumably contain everything
+you want:
+
+No sections though.
+
+source code:
+
+[source]
+case class Bla(blie: String)
+
+* lists
+* and much more
+
+****
+
 == Scala the language
 
 * Multi-paradigmatic
