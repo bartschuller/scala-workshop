@@ -20,6 +20,9 @@ This work is a modified version of https://github.com/svenax/asciidoc-s5[asciido
 asciidoc::
   * on a Mac: `brew install asciidoc`
   * Probably available in your Linux distribution too
+source-highlight::
+  * `brew install source-highlight`
+  * `apt-get install source-highlight`
 docbook::
   Only needed for handouts
   * Mac: `brew install docbook`

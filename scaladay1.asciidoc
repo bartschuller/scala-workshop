@@ -16,36 +16,90 @@ v. 0.1, 2011-07-31
 Actually, we're going the agile route and iterate these
 subjects.
 
-****
-Notes like this one only appear in the handouts. They can be
-as long as you like and can presumably contain everything
-you want:
-
-No sections though.
-
-source code:
-
-[source]
-case class Bla(blie: String)
-
-* lists
-* and much more
-
-****
-
 == Scala the language
 
-* Multi-paradigmatic
-* Yes, it's functional
-* But also a better OO language
+[options="incremental"]
+* …
 
-== Observer pattern
+****
+We'll not have endless slides explaining what Scala is or
+the many ways it's awesome.
 
-Java has had `java.util.Observable` since 1.0, but
-it's never used
+Today, you'll just _use_ it and see it used.
+****
 
-* No generics (fixable)
-* It's a class (can't mix it in)
+== The familiar;
+
+This is no alien language. You'll still write lots of method
+calls and they'll look just like you're used to:
+
+[source]
+myObject.callMethod("parameter 1", 2);
+
+…but let's loose the semicolon from now on. Scala _infers_
+it at the end of a line where that line could validly end.
+
+== Semi continued
+
+Problems can arise.
+
+[source]
+a = 1 + 1 + 1     // <1> don't do this
+    + 1           // <2>
+b = 1 + 1 + 1 +   // <3> do this
+    1
+
+[options="incremental"]
+<1> Statement looks finished at the end of the line, so
+compiler infers a semicolon. *a == 3*
+<2> New statement: throw away positive one
+<3> End with an operator, the compiler will expect more and
+continues looking at the next line. *b == 4*
+
+****
+`src/test/scala/DayOneSpec.scala` contains tests that really demonstrate
+the above error.
+****
+
+== Values
+
+Scala has expressions that look the same as in most other
+languages. You can store the value of an expression like
+this:
+
+[source]
+-----
+val subtotal = 42.0
+val tax = 1.19
+val fees = 10
+val total = subtotal*tax + fees
+
+val payMe = "Please pay us "+ total +" promptly."
+-----
+
+== Values are forever
+
+A `val` never changes value once initialized, which is
+mandatory.
+
+[source]
+val total = 42.0
+total = total * 1.19 // <1>
+
+<1> Compilation error
+
+Giving different things different names is a good practice,
+it's easier to talk about `subtotal` and `total` than it is
+to talk about __`total` from line 23 on__.
+
+== Variables, if you must
+
+A `var` is like the variables from most other programming
+languages (but not maths!)
+
+[source]
+var total = 42.0
+total = total * 1.19
 
 == Installing Scala
 
@@ -120,6 +174,14 @@ loop just over b, then a.
 <2> An `if` statement can appear anywhere to add a
 constraint to the combination of values. If not met, then inner loops and the
 body are skipped.
+
+== Observer pattern
+
+Java has had `java.util.Observable` since 1.0, but
+it's never used
+
+* No generics (fixable)
+* It's a class (can't mix it in)
 
 == Last slide
 
