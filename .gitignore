@@ -1,3 +1,7 @@
 /*.html
 /*.pdf
 *.swp
+.idea
+.idea_modules
+project
+target
