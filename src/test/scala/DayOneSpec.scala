@@ -29,9 +29,5 @@ class DayOneSpec extends Specification {
 
       payMe must_== "Please pay us 59.98 promptly."
     }
-    "not suck" in {
-      val subtotal = 42.0
-      subtotal = subtotal * 1.19 // <1>
-    }
   }
 }
