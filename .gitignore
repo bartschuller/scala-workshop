@@ -5,3 +5,7 @@
 .idea_modules
 project
 target
+.classpath
+.project
+.scala_dependencies
+.target
