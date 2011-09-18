@@ -4,25 +4,9 @@ First day of Scala
 :corpname: Lunatech Labs
 :language: scala
 Bart Schuller <schuller@lunatech.com>
-v. 0.1, 2011-07-31
+v. 0.1, 2011-09-11
 
 == Today's menu
-
-["aafigure"]
------------------------------------
-+----+   /-----\
-|Java|-->|Scala|
-+----+   \-----/
-
-
-     <
-+----+-----+
-|    |     |
-|    |     |
-|    |     |
-+----^-----+
-
------------------------------------
 
 * Introduction to the Scala language
 * Scala tools and resources
@@ -32,22 +16,102 @@ v. 0.1, 2011-07-31
 Actually, we're going the agile route and iterate these
 subjects.
 
-== Scala the language
+== About
 
-* …
+* what
+* when
+* who
 
-[role="handout"]
-*******
-We'll not have endless slides explaining what Scala is or
-the many ways it's awesome.
+=== What is Scala?
 
-Today, you'll just _use_ it and see it used.
-*******
+A programming language which is
+
+* Statically typed
+* Object Oriented
+* Functional
+* and more
+* focus on concurrency
+
+ifdef::backend-slidy2[<<<]
+
+* Open Source
+* runs on JVM
+* is compiled
+* has a REPL
+
+=== History
+
+Written by Martin Odersky, who also added generics to Java
+and wrote the current java compiler.
+
+* Design started in 2001
+* first release in 2003
+* 2.0 in 2006
+* Current version is 2.9.1
+
+Odersky is professor at EPFL in Switzerland, where Scala
+releases come from.
+
+=== Commercial backing
+
+The company *Typesafe* was founded in 2011 by Odersky and
+others to promote and support Scala and the Akka middleware
+framework.
+
+Advisors
+
+* James Gosling
+* Doug Lea
+
+Investors
+
+* Greylock Partners
+* founders of VMWare
+
+== Language introduction
+
+* general syntax
+* val, var, def
+* types
+
+=== Values
+
+Scala has expressions that look the same as in most other
+languages. You can store the value of an expression like
+this:
+
+[source]
+-----
+val subtotal = 42.0
+val tax = 1.19
+val fees = 10
+val total = subtotal*tax + fees
+
+println("Please pay us €"+ total +" promptly.")
+-----
+
+=== Values are forever
+
+A `val` never changes value once initialized, which is
+mandatory.
+
+[source]
+val total = 42.0
+total = total * 1.19 // <1>
+
+<1> Compilation error
+
+=== Variables, if you must
+
+A `var` is like the variables from most other programming
+languages (but not math!)
+
+[source]
+var total = 42.0
+total = total * 1.19
+
 
 == The familiar;
-
-This is no alien language. You'll still write lots of method
-calls and they'll look just like you're used to:
 
 [source]
 myObject.callMethod("parameter 1", 2);
@@ -55,7 +119,7 @@ myObject.callMethod("parameter 1", 2);
 …but let's loose the semicolon from now on. Scala _infers_
 it at the end of a line where that line could validly end.
 
-== Semi continued
+=== Semi continued
 
 Problems can arise.
 
@@ -76,46 +140,6 @@ continues looking at the next line. *b == 4*
 `src/test/scala/DayOneSpec.scala` contains tests that really demonstrate
 the above error.
 ****
-
-== Values
-
-Scala has expressions that look the same as in most other
-languages. You can store the value of an expression like
-this:
-
-[source]
------
-val subtotal = 42.0
-val tax = 1.19
-val fees = 10
-val total = subtotal*tax + fees
-
-val payMe = "Please pay us "+ total +" promptly."
------
-
-== Values are forever
-
-A `val` never changes value once initialized, which is
-mandatory.
-
-[source]
-val total = 42.0
-total = total * 1.19 // <1>
-
-<1> Compilation error
-
-Giving different things different names is a good practice,
-it's easier to talk about `subtotal` and `total` than it is
-to talk about __`total` from line 23 on__.
-
-== Variables, if you must
-
-A `var` is like the variables from most other programming
-languages (but not maths!)
-
-[source]
-var total = 42.0
-total = total * 1.19
 
 == Installing Scala
 
@@ -202,7 +226,13 @@ That's all, folks!
 
 == Topics discussed
 
-Boo
+[role="handout"]
+*******
+We'll not have endless slides explaining what Scala is or
+the many ways it's awesome.
+
+Today, you'll just _use_ it and see it used.
+*******
 
 == Topics yet to write
 
