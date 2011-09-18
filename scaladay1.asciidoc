@@ -54,7 +54,7 @@ releases come from.
 
 === Commercial backing
 
-The company *Typesafe* was founded in 2011 by Odersky and
+The company http://typesafe.com/[Typesafe] was founded in 2011 by Odersky and
 others to promote and support Scala and the Akka middleware
 framework.
 
@@ -92,8 +92,8 @@ println("Please pay us €"+ total +" promptly.")
 
 === Values are forever
 
-A `val` never changes value once initialized, which is
-mandatory.
+A `val` never changes value once initialized, and
+initialization has to happen at the declaration site.
 
 [source]
 val total = 42.0
@@ -106,20 +106,111 @@ total = total * 1.19 // <1>
 A `var` is like the variables from most other programming
 languages (but not math!)
 
+Scala programmers try to keep their use to a minimum.
+
 [source]
 var total = 42.0
 total = total * 1.19
 
+=== methods
 
-== The familiar;
+A method or a function uses the `def` keyword:
 
 [source]
-myObject.callMethod("parameter 1", 2);
+---------------------
+def sayit = println("it!")
 
-…but let's loose the semicolon from now on. Scala _infers_
-it at the end of a line where that line could validly end.
+def taxed(untaxed: Double) = untaxed * 1.19
 
-=== Semi continued
+val total = taxed(subtotal) + fees
+
+def isEven(n: Int) = {
+    if (n % 2 == 0)
+        true
+    else
+        false
+}
+---------------------
+
+Note the equals sign.
+
+What else do you notice?
+
+=== Types
+
+Values, variables and return types have optional type
+annotations.
+
+[source]
+-----------------------
+val i = 10
+val j: Int = 20
+var k: String = _
+
+def m: Unit = println("no return value")
+
+def n { // <1>
+    println("also Unit ('void' in java)")
+}
+-----------------------
+
+<1> No equals sign means it's Unit
+
+==== Built-in types and literals
+
+Byte:: `1, -127`
+Short:: `32767, 0xff, 0777`
+Int:: `10, -46565`
+Long:: `2744L, 5845776520L`
+Boolean:: `true, false`
+
+ifdef::backend-slidy2[<<<]
+
+Float:: `0.01F, -1e8F`
+Double:: `3.002, 34D`
+Char:: `'a', '€'`
+String:: `"Note the \"escapes\"",
+  """multi-line, embedded "quotes""""`
+
+==== Compound types
+
+- Tuples
+- Arrays
+- Collections
+
+===== Tuples
+
+[source]
+----------
+def divide(a: Int, b: Int): (Int, Int) =
+    (a / b, a % b)
+
+val (result, remainder) = divide(72, 30)
+
+val asl = (30, true, "Rotterdam")
+
+println("Welcome to %s".format(asl._3))
+----------
+
+[NOTE]
+====================
+Even though you can make very flexible compound
+types, the following will give a compile error because
+each element still has a static type:
+
+[source]
+val halfsex = asl._2 / 2
+
+_error: value / is not a member of Boolean_
+
+====================
+
+ifdef::backend-slidy2[<<<]
+
+.Semicolons
+************************
+Scala _infers_ semicolons at the end of a line where that
+line could validly end.
 
 Problems can arise.
 
@@ -135,11 +226,19 @@ compiler infers a semicolon. *a == 3*
 <2> New statement: throw away positive one
 <3> End with an operator, the compiler will expect more and
 continues looking at the next line. *b == 4*
+************************
+:incremental!:
 
-****
-`src/test/scala/DayOneSpec.scala` contains tests that really demonstrate
-the above error.
-****
+===== Arrays
+
+[source]
+-----------------
+val blob: Array[Byte] = fetchBlob
+val first = blob(0)
+
+def fetchBlob = Array[Byte](0, 1, 2, 3)
+def newArray = new Array[String](10)
+-----------------
 
 == Installing Scala
 
@@ -295,5 +394,5 @@ Today, you'll just _use_ it and see it used.
 ** XML library
 
 
-// a2x: --dblatex-opt "-i /Users/schuller/texmf/tex// -P latex.output.revhistory=0 -P doc.collab.show=1"
+// a2x: --dblatex-opt "-i /Users/schuller/texmf/tex// -P latex.encoding=utf8 -P latex.output.revhistory=0 -P doc.collab.show=1"
 // vim:tw=60:

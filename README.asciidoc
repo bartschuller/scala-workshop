@@ -6,14 +6,7 @@ v. 0.1, 2011-08-04
 
 == What
 
-This project contains the tools to create a presentation from
-http://www.methods.co.nz/asciidoc/[asciidoc] input, as well
-as a presentation, which you can ignore.
-
-The presentation uses a http://www.netzgesta.de/S5/[newer] version
-of http://meyerweb.com/eric/tools/s5/[S5].
-
-This work is a modified version of https://github.com/svenax/asciidoc-s5[asciidoc-s5].
+A presentation.
 
 == Tools needed
 
@@ -39,7 +32,7 @@ dblatex::
 
 === Creating the HTML presentation
 
-`asciidoc -f s5.conf mypresentation.asciidoc`
+`asciidoc -b slidy2 mypresentation.asciidoc`
 
 Add `-v` if you encounter problems.
 
