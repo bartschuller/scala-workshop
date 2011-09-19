@@ -240,6 +240,230 @@ def fetchBlob = Array[Byte](0, 1, 2, 3)
 def newArray = new Array[String](10)
 -----------------
 
+===== Collections
+
+We'll get to collections once we've covered what they're
+made of: classes and objects.
+
+=== Organizing code
+
+- Classes
+- Objects
+- Traits
+- Namespaces
+- Case Classes
+
+==== Classes
+
+The bread and butter of every program.
+
+[source]
+----------------
+class Person(val name: String, var address: Address) {
+  var moved = false
+  override def toString = "%s from %s".format(name,
+                   address.municipality)
+  def move(newAddress: Address) {
+    address = newAddress
+    moved = true
+  }
+}
+
+class Address(val street: String, val municipality:
+String, val country: String) {
+    override def toString = "%s, %s, %s".format(street, municipality,
+                   country)
+}
+----------------
+
+ifdef::backend-slidy2[<<<]
+
+Using classes looks pretty familiar.
+
+[source]
+-----------------------------
+val bart = new Person("Bart", new Address("Heemraadssingel 70",
+                                       "Rotterdam", "Holland"))
+println(bart)
+bart.move(new Address("Oudemansstraat",
+                      "Den Haag", "The Netherlands"))
+println(bart)
+-----------------------------
+
+==== Objects
+
+Mr. Singleton
+
+[source]
+----------------------------
+object Person {
+  private var peopleCount = 0
+  def total = peopleCount
+  def apply(name: String, address: Address) = {
+    peopleCount += 1
+    new Person(name, address)
+  }
+
+  def swapHomes(a: Person, b: Person) {
+    val aHome = a.address
+    a.address = b.address
+    b.address = aHome
+  }
+}
+----------------------------
+
+ifdef::backend-slidy2[<<<]
+
+Out with the new
+
+[source]
+----------------------------
+val bart = Person("Bart", Address("Oudemansstraat",
+                          "Den Haag", "The Netherlands"))
+val paco = Person("Francisco", Address("Zuid",
+                               "Rotterdam", "Holland"))
+Person.total should_== 2
+Person.swapHomes(bart, paco)
+bart.address.municipality should_== "Rotterdam"
+----------------------------
+
+ifdef::backend-slidy2[<<<]
+
+I almost forgot
+
+[source]
+----------------------------
+object MainProgram {
+  def main(args: Array[String]) {
+    println("Hello, world!")
+  }
+}
+----------------------------
+
+Or shorter
+
+[source]
+----------------------------
+object HelloWorld extends App {
+  println("Hello, world!")
+}
+----------------------------
+
+==== Traits
+
+[source]
+----------------------------
+trait Named {
+  def name: String
+}
+
+trait Ordered[A] {
+  def compare(that: A): Int
+}
+
+class Person(val name: String) extends
+		Named with Ordered[Person] {
+  def compare(that: Person) = name.compare(that.name)
+}
+----------------------------
+
+ifdef::backend-slidy2[<<<]
+
+[source]
+----------------------------
+var n: Named = new Person("Bart")
+
+n = new Named { def name = "name " + math.random }
+n = new Named { val name = "Bart" }
+----------------------------
+
+ifdef::backend-slidy2[<<<]
+
+- Traits can include concrete methods
+- Create mixin types on the spot
+
+[source]
+----------------------------
+trait Damned extends Named {
+  def damned = name.reverse
+}
+
+val bart = new Person with Damned
+bart.damned
+----------------------------
+
+==== Packages and visibility
+
+- packages
+- imports
+- privacy
+
+ifdef::backend-slidy2[<<<]
+
+- import whatever
+- wherever
+
+[source]
+----------------------------
+package com.lunatech.helloworld
+
+import com.lunatech.handy._
+
+object Hello extends App {
+  Handy.foo()
+
+  import Handy._
+  foo()
+}
+----------------------------
+
+ifdef::backend-slidy2[<<<]
+
+- default is public
+- ultra-privacy is available
+
+[source]
+----------------------------
+package com.lunatech.foo
+
+class Foo(private var i: Int) {
+  private[this] val orig = i
+  protected def printOrig = println(orig)
+  def otherI(o: Foo) = o.i
+
+  // error: value orig is not a member of Foo
+  def otherOrig(o: Foo) = o.orig
+}
+----------------------------
+
+[source]
+----------------------------
+val foo = new Foo(7) { def gimme = printOrig }
+foo.gimme
+----------------------------
+
+==== Case Classes
+
+[source]
+----------------------------
+case class Person(name: String, address: Address)
+case class Address(street: String,
+                   municipality: String,
+                   country: String)
+
+val bart1 = Person("Bart", Address("Oudemansstraat",
+                     "Den Haag", "The Netherlands"))
+val bart2 = bart.copy(address = Address("Heemraadssingel 70",
+                              "Rotterdam", "Holland"))
+----------------------------
+
+=== Collections
+
+- List
+- Vector
+- Option
+- Map
+
 == Installing Scala
 
 `brew install scala [--with-docs]`
