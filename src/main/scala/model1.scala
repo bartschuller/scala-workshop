@@ -25,12 +25,10 @@ object Person {
   }
 }
 
-class Address(val street: String, val municipality:
-String, val country: String) {
-    override def toString = "%s, %s, %s".format(street, municipality,
-                   country)
+class Address(val municipality: String, val country: String) {
+    override def toString = "%s, %s".format(municipality, country)
 }
 
 object Address {
-  def apply(s: String, m: String, c: String) = new Address(s, m, c)
+  def apply(m: String, c: String) = new Address(m, c)
 }
