@@ -10,16 +10,16 @@ class Model1Spec extends Specification {
     }
     "be movable" in {
       val bart = createBart
-      bart.move(new Address("Oudemansstraat", "Den Haag", "The Netherlands"))
+      bart.move(new Address("Den Haag", "The Netherlands"))
       bart.toString must_== "Bart from Den Haag"
     }
   }
-  def createBart = new Person("Bart", new Address("Heemraadssingel 70", "Rotterdam", "Holland"))
+  def createBart = new Person("Bart", new Address("Rotterdam", "Holland"))
 
   "The Person object" should {
     "allow construction and other stuff" in {
-      val bart = Person("Bart", Address("Oudemansstraat", "Den Haag", "The Netherlands"))
-      val paco = Person("Francisco", Address("Zuid", "Rotterdam", "Holland"))
+      val bart = Person("Bart", Address("Den Haag", "The Netherlands"))
+      val paco = Person("Francisco", Address("Rotterdam", "Holland"))
       Person.total should_== 2
       Person.swapHomes(bart, paco)
       bart.address.municipality should_== "Rotterdam"

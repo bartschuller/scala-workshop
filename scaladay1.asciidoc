@@ -16,6 +16,11 @@ v. 0.1, 2011-09-11
 Actually, we're going the agile route and iterate these
 subjects.
 
+This workshop on github (please switch branch):
+
+https://github.com/bartschuller/scala-workshop
+
+
 == About
 
 * what
@@ -245,6 +250,91 @@ def newArray = new Array[String](10)
 We'll get to collections once we've covered what they're
 made of: classes and objects.
 
+But first, it's time t get our hands dirty.
+
+== Installing the Tools
+
+- [line-through]#scala#
+- git
+- sbt
+
+=== Installing Scala
+
+Recommendation: skip the standalone scala compiler, go
+straight to the build tool.
+
+`brew install scala [--with-docs]`
+
+Install sbt instead.
+
+==== SBT
+
+- Simple Build Tool
+- Downloads deps [small]#(a.k.a. the internet)#, builds, tests
+- _Using_ it is simple
+- https://github.com/harrah/xsbt/wiki/
+- Watch out, 0.10/0.11 is latest, not compatible with 0.7 or
+  earlier
+
+==== Installing sbt
+
+We use sbt 0.10.1 for this workshop.
+
+Mac with HomeBrew:: `brew install sbt`
+Everything else::
+  Use `sbt` in the root of the workshop project from github and peruse
+  https://github.com/harrah/xsbt/wiki/Setup at your leasure.
+
+[small]#Optionally create `~/.sbtconfig`, mine contains +
+`SBT_OPTS="-Dsbt.boot.directory=$HOME/.sbt/boot/` +
+`-XX:+CMSClassUnloadingEnabled -server -Xss2m -Xms128m` +
+`-Xmx1024m -XX:MaxPermSize=512M -Dfile.encoding=UTF-8"`#
+
+==== Using sbt
+
+Existing project (directory contains `build.sbt` and/or
+`project/*.scala`):
+
+- Open a terminal
+- cd to the project directory
+- type `sbt` (or `./sbt` for the workshop)
+
+New project:
+
+- Make empty project directory, cd to it
+- `mkdir -p src/main/scala src/test/scala`
+- Optionally copy and change this workshop's `build.sbt`
+
+Other options include
+
+- https://github.com/n8han/giter8[giter8]
+- https://github.com/typesafehub/sbteclipse[sbteclipse]
+  _create-src_ option
+- https://github.com/softprops/np[np] sbt plugin
+
+==== SBT commands
+
+- `compile`
+- `test`
+- `run`
+- `~test` -- keep testing while you make changes
+- `console` -- finally a Scala REPL
+
+==== Play time
+
+Start the console and type some expressions. Try the TAB
+completion. Define some functions.
+
+Notice that every expression gets assigned to a new variable
+name `res0` etc., so creating a `val` is optional.
+
+If you want to paste larger snippets then start by typing
+`:paste`, paste your code, then type __Ctrl__-D.
+
+== Language Intro part 2
+
+Building programs and libraries
+
 === Organizing code
 
 - Classes
@@ -269,9 +359,8 @@ class Person(val name: String, var address: Address) {
   }
 }
 
-class Address(val street: String, val municipality:
-String, val country: String) {
-    override def toString = "%s, %s, %s".format(street, municipality,
+class Address(val municipality: String, val country: String) {
+    override def toString = "%s, %s".format(municipality,
                    country)
 }
 ----------------
@@ -447,15 +536,25 @@ foo.gimme
 [source]
 ----------------------------
 case class Person(name: String, address: Address)
-case class Address(street: String,
-                   municipality: String,
-                   country: String)
+case class Address(municipality: String, country: String)
 
-val bart1 = Person("Bart", Address("Oudemansstraat",
+val bart1 = Person("Bart", Address(
                      "Den Haag", "The Netherlands"))
-val bart2 = bart.copy(address = Address("Heemraadssingel 70",
+val bart2 = bart.copy(address = Address(
                               "Rotterdam", "Holland"))
 ----------------------------
+
+== Installing more Tools
+
+- IntelliJ
+- or Eclipse
+- Scala plugin
+- sbt plugin for generating intellij/eclipse files
+
+=== IntelliJ IDEA
+
+- Community Edition from http://www.jetbrains.com/idea/
+
 
 === Collections
 
@@ -463,10 +562,6 @@ val bart2 = bart.copy(address = Address("Heemraadssingel 70",
 - Vector
 - Option
 - Map
-
-== Installing Scala
-
-`brew install scala [--with-docs]`
 
 == For loops
 
