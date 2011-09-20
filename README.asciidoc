@@ -1,12 +1,15 @@
-Asciidoc for presentations
-==========================
+Scala Workshop
+==============
 :corpname: Lunatech Labs
 Bart Schuller <schuller@lunatech.com>
 v. 0.1, 2011-08-04
 
 == What
 
-A presentation.
+My slides for a Scala Workshop for beginners. Just read the html or the pdf
+and explore the source.
+
+Ignore the stuff below, it's incomplete (install slidy2 backend in asciidoc).
 
 == Tools needed
 
