@@ -1,6 +1,5 @@
 First day of Scala
 ==================
-:icons:
 :corpname: Lunatech Labs
 :language: scala
 Bart Schuller <schuller@lunatech.com>
@@ -16,7 +15,8 @@ v. 1.0, 2011-09-21
 Actually, we're going the agile route and iterate these
 subjects.
 
-This workshop on github (please switch branch):
+
+This workshop on github:
 
 https://github.com/bartschuller/scala-workshop
 
@@ -257,7 +257,7 @@ def newArray = new Array[String](10)
 We'll get to collections once we've covered what they're
 made of: classes and objects.
 
-But first, it's time t get our hands dirty.
+But first, it's time to get our hands dirty.
 
 == Installing the Tools
 
@@ -381,11 +381,9 @@ Using classes looks pretty familiar.
 
 [source]
 -----------------------------
-val bart = new Person("Bart", new Address("Heemraadssingel 70",
-                                       "Rotterdam", "Holland"))
+val bart = new Person("Bart", new Address("Rotterdam", "Holland"))
 println(bart)
-bart.move(new Address("Oudemansstraat",
-                      "Den Haag", "The Netherlands"))
+bart.move(new Address("Den Haag", "The Netherlands"))
 println(bart)
 -----------------------------
 
@@ -417,10 +415,8 @@ Out with the new
 
 [source]
 ----------------------------
-val bart = Person("Bart", Address("Oudemansstraat",
-                          "Den Haag", "The Netherlands"))
-val paco = Person("Francisco", Address("Zuid",
-                               "Rotterdam", "Holland"))
+val bart = Person("Bart", Address("Den Haag", "The Netherlands"))
+val paco = Person("Francisco", Address("Rotterdam", "Holland"))
 Person.total should_== 2
 Person.swapHomes(bart, paco)
 bart.address.municipality should_== "Rotterdam"
@@ -487,7 +483,7 @@ trait Damned extends Named {
   def damned = name.reverse
 }
 
-val bart = new Person with Damned
+val bart = new Person("Bart") with Damned
 bart.damned
 ----------------------------
 
@@ -577,11 +573,24 @@ edit ~/.sbt/plugins/build.sbt
 
 Put this in (including the empty line)
 
+[source]
 ----------------------
 resolvers += "sbt-idea-repo" at "http://mpeltonen.github.com/maven/"
 
 libraryDependencies += "com.github.mpeltonen" %% "sbt-idea" % "0.10.0"
 ----------------------
+
+In sbt: `gen-idea` will generate a complete IDEA project
+with modules and (presumably) sources and javadocs of
+dependencies.
+
+=== Eclipse
+
+- Eclipse Indigo or Helios
+- Use update site "Scala IDE wip_experiment with Scala
+  toolchain 2.9.1.final" from http://download.scala-ide.org/
+  to install the Scala plugin for Eclipse.
+- https://github.com/typesafehub/sbteclipse/tree/sbt-0.10
 
 === Collections
 
@@ -589,6 +598,10 @@ libraryDependencies += "com.github.mpeltonen" %% "sbt-idea" % "0.10.0"
 - Vector
 - Option
 - Map
+
+and
+
+- Functions
 
 ==== List
 
@@ -623,6 +636,82 @@ listLen(List(1, 2, 3)) should_== 3
 
 Also note `listLen` is a generic function: it works not just
 for `List[Int]` but for any `List[T]`.
+
+==== Vector
+
+[source]
+-------------------
+val v1 = Vector(1, 2, 3)
+val v2 = Vector(4, 5, 6)
+val v3 = v1 ++ v2
+val v4 = v2 :+ 7
+val v5 = 0 +: v1
+v4(2) should_== 6
+-------------------
+
+==== Option
+
+`Option` is a very useful generic type that can be used as
+an alternative to `null` values.
+
+[source]
+-------------------
+case class Person(name: String, address: Option[Address] =
+                                         None) {
+  override def toString = "%s from %s".format(name,
+                           address.getOrElse("the street"))
+}
+
+val homeless = Person("Bart")
+val happy = homeless.copy(address = Some(Address(
+                        "Den Haag", "Holland")))
+happy.address match {
+  case None => println("bummer")
+  case Some(a) => println("excellent to hear you live at "+a)
+}
+-------------------
+
+==== Map
+
+[source]
+-------------------
+val fruit = Map("Apple" -> "green",
+                "Banana" -> "yellow",
+                "Strawberry" -> "red")
+
+fruit.get("Pear") should beNone
+fruit.get("Banana") should beSome("yellow")
+fruit("Apple") should_== "green"
+// fruit("Pear") gives NoSuchElementException
+
+val fruitier = fruit + ("Pear" -> "green")
+fruitier("Pear") should_== "green"
+-------------------
+
+==== Functions
+
+[source]
+-------------------
+val s = 1 to 100
+s.filter(_ % 2 == 1).map(x => "%s is odd".format(x)).
+  take(3).foreach { s =>
+    println(s)
+}
+-------------------
+
+[source]
+-------------------
+val sum = (a: Int, b: Int) => a+b
+
+def combine(a: Int, b: Int, f: Function2[Int, Int, Int]) =
+  f(a, b)
+
+println(combine(1,4,sum))
+
+def product(x: Int, y: Int) = x*y
+
+println(combine(2,5,product))
+-------------------
 
 === For comprehensions
 

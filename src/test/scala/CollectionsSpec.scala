@@ -20,4 +20,29 @@ class CollectionsSpec extends Specification {
       listLen(List(1, 2, 3)) should_== 3
     }
   }
+  "Vectors" should {
+    "Allow append, prepend, indexing" in {
+      val v1 = Vector(1, 2, 3)
+      val v2 = Vector(4, 5, 6)
+      val v3 = v1 ++ v2
+      val v4 = v2 :+ 7
+      val v5 = 0 +: v1
+      v4(2) should_== 6      
+    }
+  }
+  "Maps" should {
+    "be easy" in {
+      val fruit = Map("Apple" -> "green",
+                      "Banana" -> "yellow",
+                      "Strawberry" -> "red")
+
+      fruit.get("Pear") should beNone
+      fruit.get("Banana") should beSome("yellow")
+      fruit("Apple") should_== "green"
+      // fruit("Pear") gives NoSuchElementException
+
+      val fruitier = fruit + ("Pear" -> "green")
+      fruitier("Pear") should_== "green"
+    }
+  }
 }
