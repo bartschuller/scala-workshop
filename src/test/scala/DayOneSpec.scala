@@ -30,4 +30,16 @@ class DayOneSpec extends Specification {
       payMe must_== "Please pay us 59.98 promptly."
     }
   }
+  "Exceptions" should {
+    "be caught" in {
+      val x = List(1, 2)
+      try {
+        x.tail.tail.head
+        failure("Should have thrown")
+      } catch {
+        case _: NoSuchElementException => success
+        case e => failure("Unecpectedly got "+e.toString)
+      }
+    }
+  }
 }
