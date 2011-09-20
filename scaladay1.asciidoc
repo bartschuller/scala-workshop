@@ -4,7 +4,7 @@ First day of Scala
 :corpname: Lunatech Labs
 :language: scala
 Bart Schuller <schuller@lunatech.com>
-v. 0.1, 2011-09-11
+v. 1.0, 2011-09-21
 
 == Today's menu
 
@@ -19,7 +19,6 @@ subjects.
 This workshop on github (please switch branch):
 
 https://github.com/bartschuller/scala-workshop
-
 
 == About
 
@@ -177,6 +176,14 @@ Char:: `'a', '€'`
 String:: `"Note the \"escapes\"",
   """multi-line, embedded "quotes""""`
 
+==== Supertypes
+
+Not that important.
+
+- Any
+- AnyVal
+- AnyRef
+
 ==== Compound types
 
 - Tuples
@@ -320,7 +327,7 @@ Other options include
 - `~test` -- keep testing while you make changes
 - `console` -- finally a Scala REPL
 
-==== Play time
+==== Exploration time
 
 Start the console and type some expressions. Try the TAB
 completion. Define some functions.
@@ -333,7 +340,10 @@ If you want to paste larger snippets then start by typing
 
 == Language Intro part 2
 
-Building programs and libraries
+- code structures
+- collections and functions
+- exceptions and pattern matching
+- for-comprehensions
 
 === Organizing code
 
@@ -554,7 +564,24 @@ val bart2 = bart.copy(address = Address(
 === IntelliJ IDEA
 
 - Community Edition from http://www.jetbrains.com/idea/
+- Scala Plugin: _Preferences…_ -> _Plugins_
 
+sbt plugin: https://github.com/mpeltonen/sbt-idea/ +
+or rather:
+
+[source,bash]
+----------------------
+mkdir -p ~/.sbt/plugins
+edit ~/.sbt/plugins/build.sbt
+----------------------
+
+Put this in (including the empty line)
+
+----------------------
+resolvers += "sbt-idea-repo" at "http://mpeltonen.github.com/maven/"
+
+libraryDependencies += "com.github.mpeltonen" %% "sbt-idea" % "0.10.0"
+----------------------
 
 === Collections
 
@@ -563,13 +590,52 @@ val bart2 = bart.copy(address = Address(
 - Option
 - Map
 
-== For loops
+==== List
+
+Constructing lists
+
+[source]
+-------------------
+val l1 = List(1, 2, 3)
+val l2 = 2 :: 3 :: Nil
+val l3 = 1 :: l2
+l1 should_== l3
+val a1 = Array(1, 2, 3)
+val l4 = a1.toList
+l1 should_== l4
+-------------------
+
+==== Matching on List
+
+Deconstructing lists
+
+[source]
+-------------------
+def listLen[T](l: List[T]): Int = {
+  l match {
+    case x :: xs => 1 + listLen(xs)
+    case _ => 0
+  }
+}
+
+listLen(List(1, 2, 3)) should_== 3
+-------------------
+
+Also note `listLen` is a generic function: it works not just
+for `List[Int]` but for any `List[T]`.
+
+=== For comprehensions
+
+Scala doesn't have `for` loops, but it does have the `for`
+keyword. Let's explore what it does.
 
 [source]
 for (i <- 1 to 10) { println(i) }
 
+_Spoiler alert: the next slides will show you my solution to
+problem number 9 of the Euler project._
 
-== Euler problem 9
+==== Euler problem 9
 
 A Pythagorean triplet is a set of three natural numbers, +
 a < b < c, for which,
@@ -581,7 +647,7 @@ For example, 3^2^ + 4^2^ = 9 + 16 = 25 = 5^2^.
 There exists exactly one Pythagorean triplet for which +
 a + b + c = 1000. Find the product _abc_.
 
-== Analysis
+==== Analysis
 
 All are Natural numbers, so > 0 +
 a < b < c +
@@ -592,7 +658,7 @@ a + b + c = 1000
 * c = 1000 - a - b
 * let's just try all a and b below 1000
 
-== for
+==== for
 
 [source]
   def euler9 = {
@@ -611,7 +677,9 @@ values 2 to 1000 inclusive
 current value of b, so we generate all possible combinations
 of a and b.
 
-== for
+//
+
+ifdef::backend-slidy2[<<<]
 
 [source]
   def euler9 = {
@@ -630,88 +698,99 @@ loop just over b, then a.
 constraint to the combination of values. If not met, then inner loops and the
 body are skipped.
 
-== Observer pattern
+=== Exceptions
 
-Java has had `java.util.Observable` since 1.0, but
-it's never used
+[source]
+val x = List(1, 2)
+try {
+  x.tail.tail.head
+  failure("Should have thrown")
+} catch {
+  case _: NoSuchElementException => success
+  case e => failure("Unexpectedly got "+e.toString)
+}
 
-* No generics (fixable)
-* It's a class (can't mix it in)
 
-== Last slide
+== Where to go from here
 
-That's all, folks!
+Martin Odersky classifies the journey to Scala mastery as
+follows:
 
-== Topics discussed
+* Level A1: Beginning application programmer
+** Java-like statements and expressions: standard operators, method calls, conditionals, loops, try/catch
+** class, object, def, val, var, import, package
+** Infix notation for method calls
+** Simple closures
+** Collections with map, filter, etc
+** for-expressions
 
-[role="handout"]
-*******
-We'll not have endless slides explaining what Scala is or
-the many ways it's awesome.
+ifdef::backend-slidy2[<<<]
 
-Today, you'll just _use_ it and see it used.
-*******
+* Level A2: Intermediate application programmer
+** Pattern matching
+** Trait composition
+** Recursion, in particular tail recursion
+** XML literals
 
-== Topics yet to write
+ifdef::backend-slidy2[<<<]
 
-* Why Scala?
-** Short history
-** Overview of Scala's core characteristics
-* Setting up the development environment
-** Installing the Scala distribution
-** Installing Eclipse and the Scala plugin
-** Installing sbt
-* First steps
-** Interactive programming in the REPL
-** Variables and methods
-** Expressions and type inference
-** First glance at functions
-* Basic OO features
-** Classes, class parameters, constructors
-** Fields, class parameters as fields
-** Methods
-** Operators
-** Named and default arguments
-** Packages and imports
-** Access modifiers
-** Singleton objects, companions, Predef
-** Case classes
-* Testing in Scala
-** SBT managed dependencies
-** Test-driven development with triggered test (\~test)
-** Testing with specs2
-* Learning FP by collections
-** Collection hierarchy, creating instances
+* Level A3: Expert application programmer
+** Folds, i.e. methods such as foldLeft, foldRight
+** Streams and other lazy data structures
+** Actors
+** Combinator parsers
+
+ifdef::backend-slidy2[<<<]
+
+* Level L1: Junior library designer
 ** Type parameters
-** Tuples
-** Immutability versus mutability
-** Some important collection methods
-** Higher-order functions and function literals
-** Functions values, function types, short notation
-** Important higher order functions: map, flatMap and filter
-* For-expressions and -loops
-** Generators
-** Filters
-** Definitions
-** Translation of for-expressions and -loops
-* Inheritance and traits
-** Extending classes
-** Final and sealed classes
-** Enumerations
-** Overriding members
-** Abstract classes
-** Implementing abstract members
-** Standard type hierarchy
-** Traits and mix-in composition
-* Pattern Matching
-** Match-expressions
-** Pattern types
-** Pattern guards
-** Patterns outside of match expressions
-* XML support
-** Built-in literals
-** XML library
+** Traits
+** Lazy vals
+** Control abstraction, currying
+** By-name parameters
 
+ifdef::backend-slidy2[<<<]
+
+* Level L2: Senior library designer
+** Variance annotations
+** Existential types (e.g., to interface with Java wildcards)
+** Self type annotations and the cake pattern for dependency injection
+** Structural types (aka static duck typing)
+** Defining map/flatmap/withFilter for new kinds of for-expressions
+** Extractors
+
+ifdef::backend-slidy2[<<<]
+
+* Level L3: Expert library designer
+** Early initializers
+** Abstract types
+** Implicit definitions
+** Higher-kinded types
+
+== The Scala community
+
+- Twitter: https://twitter.com/#!/BartSchuller/scala
+- scala-user list: https://groups.google.com/forum/#!forum/scala-user
+- Scala Types podcast: http://itunes.apple.com/us/podcast/the-scala-types/id443785200
+
+News feeds
+
+- Scala News: http://www.scala-lang.org/rss.xml
+- Reddit Scala http://reddit.com/r/scala/.rss
+- http://implicit.ly/ (release announcements for libraries)
+- Scala Scoop: http://scalascoop.tumblr.com/rss (mostly
+  dupes though)
+
+=== Interesting Scala projects
+
+Scalaz:: Hardcore Haskell-style functional programming
+concepts.
+Lift:: The first well-known Scala web-framework. Best for
+stateful, interactive sites.
+
+== The End
+
+[big]#Write code, have fun, be awesome#
 
 // a2x: --dblatex-opt "-i /Users/schuller/texmf/tex// -P latex.encoding=utf8 -P latex.output.revhistory=0 -P doc.collab.show=1"
 // vim:tw=60:
